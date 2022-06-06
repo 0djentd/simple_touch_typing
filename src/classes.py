@@ -14,12 +14,12 @@ class IterationResult(enum.Enum):
     skip = 'SKIP'
 
 
-typing.Literal[IterationResult.fail, IterationResult.ok, IterationResult.skip]
+IterationResultTypes = typing.Literal[IterationResult.fail, IterationResult.ok, IterationResult.skip]
 
 
 class Iteration():
     char: str
-    result: str | None
+    result: IterationResultTypes | None
     time_start: float | None
     time_end: float | None
 
