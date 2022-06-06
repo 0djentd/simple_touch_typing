@@ -60,5 +60,4 @@ class App():
     sessions: list[Session]
 
     def __init__(self) -> None:
-        logger.info("Started")
         self.sessions = []
