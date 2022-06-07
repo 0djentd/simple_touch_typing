@@ -1,7 +1,6 @@
 import time
 import dataclasses
 import logging
-import curses
 import enum
 import typing
 
@@ -76,21 +75,6 @@ class Iteration():
 class Session():
     charset: str
     iterations: list[Iteration] = []
-
-    def start(self):
-        for char in self.charset:
-            while True:
-                iteration = Iteration(char)
-                self.iterations.append(iteration)
-                iteration.time_start = time.time()
-                q = char
-                a = input(q)
-                iteration.time_end = time.time()
-                if q == a:
-                    iteration.result = IterationResult.ok
-                    break
-                else:
-                    iteration.result = IterationResult.fail
 
     def __init__(self, charset) -> None:
         self.charset = charset

@@ -2,7 +2,7 @@
 
 import logging
 
-from src.classes import App, Session
+from src.core import App, Session
 from tests.utils import get_random_charset
 
 logging.basicConfig(level=logging.DEBUG)
