@@ -14,14 +14,49 @@ class IterationResult(enum.Enum):
     skip = 'SKIP'
 
 
-IterationResultTypes = typing.Literal[IterationResult.fail, IterationResult.ok, IterationResult.skip]
+IterationResultTypes = typing.Literal[IterationResult.fail,
+                                      IterationResult.ok,
+                                      IterationResult.skip]
 
 
 class Iteration():
+    """Object to represent test iteration.
+
+    How to use:
+    >>> iteration = Iteration("a")
+    >>> iteration.start()
+    >>> iteration.answer = "a"
+    >>> iteration.result
+    <<< "OK"
+    """
+
     char: str
     result: IterationResultTypes | None
     time_start: float | None
     time_end: float | None
+    _answer: str | None
+
+    @property
+    def answer(self):
+        if self._answer:
+            return self._answer[:]
+
+    @answer.setter
+    def answer(self, val):
+        if len(val) != 1:
+            raise ValueError
+        self._answer = str(val)
+        self.time_end = time.time()
+        self.result = self._check()
+
+    def _check(self):
+        if self.answer == self.char:
+            return IterationResult.ok
+        else:
+            return IterationResult.fail
+
+    def start(self):
+        self.time_start = time.time()
 
     def __init__(self, char):
         char = str(char)
@@ -32,6 +67,7 @@ class Iteration():
         self.result = None
         self.time_start = None
         self.time_end = None
+        self._answer = None
 
 
 class Session():
