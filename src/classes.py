@@ -36,6 +36,16 @@ class Iteration():
     time_end: float | None
     _answer: str | None
 
+    def __init__(self, char):
+        char = str(char)
+        if len(char) != 1:
+            raise ValueError
+        self.char = char
+        self.result = None
+        self.time_start = None
+        self.time_end = None
+        self._answer = None
+
     @property
     def answer(self):
         if self._answer:
@@ -49,25 +59,18 @@ class Iteration():
         self.time_end = time.time()
         self.result = self._check()
 
+    def start(self):
+        self.time_start = time.time()
+
+    def skip(self):
+        self.result = IterationResult.skip
+        self.time_end = time.time()
+
     def _check(self):
         if self.answer == self.char:
             return IterationResult.ok
         else:
             return IterationResult.fail
-
-    def start(self):
-        self.time_start = time.time()
-
-    def __init__(self, char):
-        char = str(char)
-        if len(char) != 1:
-            raise ValueError
-
-        self.char = char
-        self.result = None
-        self.time_start = None
-        self.time_end = None
-        self._answer = None
 
 
 class Session():
@@ -91,6 +94,7 @@ class Session():
 
     def __init__(self, charset) -> None:
         self.charset = charset
+
 
 class App():
     sessions: list[Session]
