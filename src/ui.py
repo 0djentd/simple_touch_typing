@@ -17,7 +17,7 @@ class SessionUI():
 
 class AppUI():
     app: core.App
-    screen: curses._CursesWindow
+    screen = None
 
     @property
     def session(self) -> core.Session | None:
@@ -26,9 +26,9 @@ class AppUI():
         else:
             return None
 
-    def __init__(self):
+    def __init__(self, screen):
         self.app = core.App()
-        self.screen = curses.initscr()
+        self.screen = screen
 
     def start(self) -> None:
         curses.cbreak()
